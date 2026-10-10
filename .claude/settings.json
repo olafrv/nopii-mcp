@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(UV_SECURITY.md)",
+      "Write(UV_SECURITY.md)",
+      "Edit(.claude/settings.json)",
+      "Write(.claude/settings.json)",
+      "Read(cache/raw/**)"
+    ]
+  }
+}

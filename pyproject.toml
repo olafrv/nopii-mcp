@@ -1,0 +1,46 @@
+[project]
+name = "nopii-mcp"
+version = "0.1.0"
+description = "Local MCP server that serves your files to Claude as PII-redacted markdown"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = "==3.12.*"
+dependencies = [
+    "mcp==2.3.0",
+    "docling==2.133.0",
+    "presidio-analyzer[gliner]==2.2.364",
+    "presidio-anonymizer==2.2.364",
+    "lingua-language-detector==2.2.0",
+    "en-core-web-sm==3.8.0",
+    "de-core-news-sm==3.8.0",
+]
+
+[project.scripts]
+nopii-mcp = "nopii_mcp.cli:main"
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "ruff==0.16.10"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+exclude-newer = "7 days"
+
+[tool.uv.sources]
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }
+de-core-news-sm = { url = "https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl" }
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+# Same harmless library warnings that src/nopii_mcp/__init__.py silences (pytest resets filters per test).
+filterwarnings = [
+    'ignore:`torch\.jit\.script` is deprecated:FutureWarning',
+    "ignore:The `resume_download` argument is deprecated:UserWarning",
+]
